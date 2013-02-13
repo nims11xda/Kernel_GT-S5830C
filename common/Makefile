@@ -2,7 +2,7 @@ VERSION = 2
 PATCHLEVEL = 6
 SUBLEVEL = 35
 EXTRAVERSION = .7
-NAME = Yokohama
+NAME = rafael
 
 BRCM_MODULES := ../modules
 
@@ -534,9 +534,9 @@ endif # $(dot-config)
 all: vmlinux
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
-KBUILD_CFLAGS	+= -Os
+KBUILD_CFLAGS	+= -Os -mlittle-endian -march=armv6j -mcpu=arm1136jf-s -mtune=arm1136jf-s -mfpu=vfp -mfloat-abi=softfp -mthumb-interwork
 else
-KBUILD_CFLAGS	+= -O2
+KBUILD_CFLAGS	+= -O2 -mlittle-endian -march=armv6j -mcpu=arm1136jf-s -mtune=arm1136jf-s -mfpu=vfp -mfloat-abi=softfp -mthumb-interwork
 endif
 
 include $(srctree)/arch/$(SRCARCH)/Makefile
@@ -585,6 +585,8 @@ KBUILD_CFLAGS	+= $(call cc-option,-fno-strict-overflow)
 
 # conserve stack if available
 KBUILD_CFLAGS   += $(call cc-option,-fconserve-stack)
+
+KBUILD_CFLAGS += -Wno-unused
 
 # Add user supplied CPPFLAGS, AFLAGS and CFLAGS as the last assignments
 # But warn user when we do so
